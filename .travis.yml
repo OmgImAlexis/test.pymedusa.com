@@ -1,5 +1,5 @@
 before_install:
-  - openssl aes-256-cbc -K $encrypted_3c592228dd61_key -iv $encrypted_3c592228dd61_iv in deploy_static.pem.enc -out deploy_static.pem -d
+  - openssl aes-256-cbc -K $encrypted_3c592228dd61_key -iv $encrypted_3c592228dd61_iv -in deploy_static.pem.enc -out deploy_static.pem -d
 
 after_success:
   - eval "$(ssh-agent -s)"
