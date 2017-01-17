@@ -1,7 +1,7 @@
 FROM alpine:3.3
 MAINTAINER Alexis Tyler <xo@wvvw.me>
 
-RUN apk --no-cache add tini git openssh-client \
+RUN apk --no-cache add git openssh-client \
     && apk --no-cache add --virtual devs tar curl
 
 # Install Caddy Server, and All Middleware
@@ -11,14 +11,14 @@ RUN curl "https://caddyserver.com/download/build?os=linux&arch=amd64&features=DN
 # Remove build devs
 RUN apk del devs
 
-RUN mkdir -p /var/www/html/
-WORKDIR /var/www/html/
-ADD /static/ .
+RUN mkdir -p /var/www/html
 
-RUN mv /var/www/html/Caddyfile /etc/Caddyfile
+WORKDIR /var/www/html
+VOLUME /var/www/html
+
+ADD /static/ .
+ADD Caddyfile /etc/Caddyfile
 
 EXPOSE 5000
-
-ENTRYPOINT ["/sbin/tini"]
 
 CMD ["caddy", "-quic", "--conf", "/etc/Caddyfile"]
