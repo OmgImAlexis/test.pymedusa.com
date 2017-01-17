@@ -14,7 +14,6 @@ RUN apk del devs
 RUN mkdir -p /var/www/html
 
 WORKDIR /var/www/html
-VOLUME /var/www/html
 
 ADD /static/ .
 ADD Caddyfile /etc/Caddyfile
